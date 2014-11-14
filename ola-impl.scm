@@ -28,22 +28,22 @@
 ;; DmxBuffer
 ;;
 
-(define-record-type DmxBuffer
-  (%DmxBuffer this)
-  DmxBuffer?
-  (this DmxBuffer-this DmxBuffer-this-set!))
+(define-record-type dmxbuffer
+  (%dmxbuffer this)
+  dmxbuffer?
+  (this dmxbuffer-this dmxbuffer-this-set!))
 
-(define (DmxBuffer)
-  (%DmxBuffer
+(define (dmxbuffer)
+  (%dmxbuffer
    ((foreign-lambda (c-pointer "ola::DmxBuffer")
                     "new ola::DmxBuffer"))))
 
-(define-foreign-type DmxBuffer
-  (instance ola::DmxBuffer DmxBuffer))
+(define-foreign-type dmxbuffer
+  (instance ola::DmxBuffer dmxbuffer))
 
-(define DmxBuffer.Blackout
+(define dmxbuffer-blackout
   (foreign-lambda* bool
-      ((DmxBuffer data))
+      ((dmxbuffer data))
     "C_return(data->Blackout());"))
 
 
@@ -51,32 +51,32 @@
 ;; StreamingClient
 ;;
 
-(define-record-type StreamingClient
-  (%StreamingClient this)
-  StreamingClient?
-  (this StreamingClient-this StreamingClient-this-set!))
+(define-record-type streamingclient
+  (%streamingclient this)
+  streamingclient?
+  (this streamingclient-this streamingclient-this-set!))
 
-(define StreamingClient
+(define streamingclient
   (let ((constructor1
          (foreign-lambda (c-pointer "ola::client::StreamingClient")
                          "new ola::client::StreamingClient"
                          bool)))
     (match-lambda*
-     (() (%StreamingClient (constructor1 #t)))
-     ((#t) (%StreamingClient (constructor1 #t)))
-     ((#f) (%StreamingClient (constructor1 #f))))))
+     (() (%streamingclient (constructor1 #t)))
+     ((#t) (%streamingclient (constructor1 #t)))
+     ((#f) (%streamingclient (constructor1 #f))))))
 
-(define-foreign-type StreamingClient
-  (instance ola::client::StreamingClient StreamingClient))
+(define-foreign-type streamingclient
+  (instance ola::client::StreamingClient streamingclient))
 
-(define StreamingClient.Setup
+(define streamingclient-setup
   (foreign-lambda* bool
-      ((StreamingClient client))
+      ((streamingclient client))
     "C_return(client->Setup());"))
 
-(define StreamingClient.SendDmx
+(define streamingclient-send-dmx
   (foreign-lambda* bool
-      ((StreamingClient client) (unsigned-int universe) (DmxBuffer data))
+      ((streamingclient client) (unsigned-int universe) (dmxbuffer data))
     "C_return(client->SendDmx(universe, *data));"))
 
 
