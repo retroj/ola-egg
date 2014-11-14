@@ -1,0 +1,10 @@
+* /usr/bin/ld: cannot find -lprotobuf
+
+You need to install libprotobuf-dev.
+
+* warnings spewed about chicken.h: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+
+When string constants are assigned or passed to functions, C++ wants the
+type declared as "const char*" instead of simply "char*".  In sjamaan's
+words, "C++ is being silly".  We suppress the warnings by passing
+-Wno-write-strings to the compiler.
