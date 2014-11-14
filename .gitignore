@@ -1,0 +1,4 @@
+*.cpp
+*.import.*
+*.o
+*.so
