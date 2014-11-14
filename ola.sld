@@ -7,6 +7,5 @@
           (only (chicken) case-lambda getter-with-setter)
           (only (data-structures) alist-ref)
           foreign
-          matchable
-          records)
+          matchable)
   (include "ola-impl"))
