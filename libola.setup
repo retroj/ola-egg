@@ -1,6 +1,7 @@
 ;; -*- scheme -*-
 
 (compile -s -O2 -d0 -c++ -X r7rs -R r7rs -J libola.sld
+         -R srfi-99 ;; hack
          -L "`pkg-config --libs libola`"
          -C "-Wno-write-strings")
 (compile -s -O2 -d0 -c++ -X r7rs -R r7rs libola.import.scm
