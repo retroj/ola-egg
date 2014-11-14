@@ -1,5 +1,5 @@
 
-(define-library (libola)
+(define-library (ola)
   (export DmxBuffer DmxBuffer.Blackout
           StreamingClient StreamingClient.Setup)
   (import (scheme base)
@@ -9,4 +9,4 @@
           foreign
           matchable
           records)
-  (include "libola-impl"))
+  (include "ola-impl"))
