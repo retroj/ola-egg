@@ -41,10 +41,41 @@
 (define-foreign-type dmxbuffer
   (instance ola::DmxBuffer dmxbuffer))
 
+(define dmxbuffer-set-channel
+  (foreign-lambda* void
+      ((dmxbuffer buffer) (unsigned-int channel) (unsigned-byte data))
+    "buffer->SetChannel(channel, data);"))
+
 (define dmxbuffer-blackout
   (foreign-lambda* bool
       ((dmxbuffer data))
     "C_return(data->Blackout());"))
+
+(define dmxbuffer-size
+  (foreign-lambda* unsigned-int
+      ((dmxbuffer buffer))
+    "C_return(buffer->Size());"))
+
+;; dmxbuffer-set raw data + length, a string, or another dmxbuffer
+
+;; dmxbuffer-set-from-string - comma-separated string giving channel values
+
+;; dmxbuffer-set-range-to-value - offset + value + length
+
+;; dmxbuffer-set-range - offset + data + length
+
+;; dmxbuffer-set-channel - channel + value
+
+;; dmxbuffer-get - dataptr + length
+;; dmxbuffer-get - channel
+;; dmxbuffer-get() -> string
+
+;; dmxbuffer-get-range - channel + dataptr + length
+
+;; dmxbuffer-reset
+
+;; dmxbuffer-to-string
+
 
 
 ;;
@@ -78,29 +109,3 @@
   (foreign-lambda* bool
       ((streamingclient client) (unsigned-int universe) (dmxbuffer data))
     "C_return(client->SendDmx(universe, *data));"))
-
-
-;;; Example Program
-
-;; ola::InitLogging(ola::OLA_LOG_WARN, ola::OLA_LOG_STDERR)
-
-;; ola::DmxBuffer buffer
-;; buffer.Blackout();
-
-;; ola::client::StreamingClient ola_client(
-;;     ola::client::StreamingClient::Options())
-
-;; if (! ola_client.Setup()) {
-;;     std::cerr << "Setup failed" << endl;
-;;     exit(1);
-;; }
-
-;; for (unsigned int i = 0; i < 100; ++i) {
-;;     buffer.SetChannel(0, i);
-;;     if (! ola_client.SendDmx(universe, buffer)) {
-;;         cout << "Send DMX failed" << endl;
-;;         exit(1);
-;;     }
-;;     usleep(25000); // 25ms between frames
-;; }
-;; return 0;

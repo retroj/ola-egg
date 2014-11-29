@@ -1,7 +1,10 @@
 
 (define-library (ola)
-  (export dmxbuffer dmxbuffer-blackout
-          streamingclient streamingclient-setup)
+  (export dmxbuffer
+          dmxbuffer-set-channel
+          dmxbuffer-blackout dmxbuffer-size
+          streamingclient streamingclient-setup
+          streamingclient-send-dmx)
   (import (scheme base)
           (srfi 99)
           (only (chicken) case-lambda getter-with-setter)
