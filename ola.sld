@@ -1,6 +1,7 @@
 
 (define-library (ola)
   (export dmxbuffer
+          dmxbuffer-get
           dmxbuffer-set! dmxbuffer-set-channel
           dmxbuffer-blackout dmxbuffer-size
           streamingclient streamingclient-setup
