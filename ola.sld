@@ -20,6 +20,7 @@
   (export dmxbuffer
           dmxbuffer-get
           dmxbuffer-set! dmxbuffer-set-channel
+          dmxbuffer-set-range!
           dmxbuffer-blackout dmxbuffer-size
           streamingclient streamingclient-setup
           streamingclient-send-dmx)
