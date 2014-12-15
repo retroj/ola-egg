@@ -3,4 +3,5 @@
 ((license "LGPL")
  (category ffi)
  (author "John J. Foerch")
- (synopsis "bindings for libola"))
+ (synopsis "bindings for libola")
+ (foreign-depends "libola-dev"))
