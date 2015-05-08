@@ -118,28 +118,18 @@
 
 ;; dmxbuffer-set-range-to-value - offset + value + length
 
-(define dmxbuffer-set-range/u16vector
+(define dmxbuffer-set-range!
   (case-lambda
    ((dmxbuffer i data offset length)
     ((foreign-lambda* bool
          ((dmxbuffer buffer) (unsigned-int i)
-          (nonnull-u16vector data) (unsigned-int offset)
+          (nonnull-blob data) (unsigned-int offset)
           (unsigned-int length))
-       "C_return(buffer->SetRange(i * 2, (uint8_t*)&data[offset], length * 2));")
-     dmxbuffer i data offset length))
+       "C_return(buffer->SetRange(i, (uint8_t*)&data[offset], length));")
+     dmxbuffer i (byte-blob->blob data) offset length))
    ((dmxbuffer i data)
-    (dmxbuffer-set-range/u16vector
-     dmxbuffer i data 0 (u16vector-length data)))))
+    (dmxbuffer-set-range! dmxbuffer i data 0 (byte-blob-length data)))))
 
-(define (dmxbuffer-set-range! dmxbuffer i data . args)
-  (apply
-   (cond
-    #;((u8vector? data) dmxbuffer-set-range/u8vector)
-    ((u16vector? data) dmxbuffer-set-range/u16vector)
-    #;((u32vector? data) dmxbuffer-set-range/u32vector)
-    (else
-     (error "Unsupported vector type passed to dmxbuffer-set-range!")))
-   dmxbuffer i data args))
 
 ;; dmxbuffer-set-channel - channel + value
 

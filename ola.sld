@@ -28,6 +28,7 @@
           (scheme case-lambda)
           (srfi 4)
           (srfi 99)
+          (byte-blob)
           (only (chicken) getter-with-setter)
           (only (data-structures) alist-ref)
           foreign
