@@ -126,9 +126,9 @@
           (nonnull-blob data) (unsigned-int offset)
           (unsigned-int length))
        "C_return(buffer->SetRange(i, (uint8_t*)&data[offset], length));")
-     dmxbuffer i (byte-blob->blob data) offset length))
+     dmxbuffer i data offset length))
    ((dmxbuffer i data)
-    (dmxbuffer-set-range! dmxbuffer i data 0 (byte-blob-length data)))))
+    (dmxbuffer-set-range! dmxbuffer i data 0 (blob-size data)))))
 
 
 ;; dmxbuffer-set-channel - channel + value
