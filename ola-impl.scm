@@ -42,6 +42,41 @@
 
 
 ;;
+;; Logging
+;;
+
+(define-foreign-enum-type (log-level (enum ola::log_level))
+  (log-level->int int->log-level)
+  (log-level/none ola::OLA_LOG_NONE)
+  (log-level/fatal ola::OLA_LOG_FATAL)
+  (log-level/warn ola::OLA_LOG_WARN)
+  (log-level/info ola::OLA_LOG_INFO)
+  (log-level/debug ola::OLA_LOG_DEBUG)
+  (log-level/max ola::OLA_LOG_MAX))
+
+(define-foreign-enum-type (log-output int)
+  (log-output->int int->log-output)
+  (log-output/stderr ola::OLA_LOG_STDERR)
+  (log-output/syslog ola::OLA_LOG_SYSLOG)
+  (log-output/null ola::OLA_LOG_NULL))
+
+(foreign-declare
+ "bool InitLoggingWrapper1 (ola::log_level level, int output) {"
+ "  return(ola::InitLogging(level, static_cast<ola::log_output>(output)));"
+ "}")
+
+(define init-logging
+  (case-lambda
+   ((level output)
+    ((foreign-lambda bool "InitLoggingWrapper1" log-level log-output)
+     level output))
+   ((level)
+    (init-logging level 'log-output/stderr))
+   (()
+    (init-logging 'log-level/warn 'log-output/stderr))))
+
+
+;;
 ;; DmxBuffer
 ;;
 
