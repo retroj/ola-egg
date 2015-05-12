@@ -1,6 +1,6 @@
 
 ;; This file is part of ola-egg.
-;; Copyright (C) 2014  John J. Foerch
+;; Copyright (C) 2014-2015  John J. Foerch
 ;;
 ;; ola-egg is free software: you can redistribute it and/or modify it
 ;; under the terms of the GNU Lesser General Public License as published
@@ -17,7 +17,8 @@
 ;; <http://www.gnu.org/licenses/>.
 
 (define-library (ola)
-  (export dmxbuffer
+  (export init-logging
+          dmxbuffer
           dmxbuffer-get
           dmxbuffer-set! dmxbuffer-set-channel
           dmxbuffer-set-range!
