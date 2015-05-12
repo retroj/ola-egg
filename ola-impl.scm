@@ -93,7 +93,7 @@
          ((dmxbuffer buffer) (unsigned-int i)
           (nonnull-blob data) (unsigned-int offset)
           (unsigned-int length))
-       "C_return(buffer->SetRange(i, (uint8_t*)&data[offset], length));")
+       "C_return(buffer->SetRange(i, &data[offset], length));")
      dmxbuffer i data offset length))
    ((dmxbuffer i data)
     (dmxbuffer-set-range! dmxbuffer i data 0 (blob-size data)))))
