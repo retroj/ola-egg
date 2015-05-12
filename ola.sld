@@ -31,6 +31,7 @@
           (srfi 99)
           (only (chicken) blob-size getter-with-setter)
           (only (data-structures) alist-ref)
-          foreign
-          matchable)
+          (foreign)
+          (foreigners)
+          (matchable))
   (include "ola-impl"))
