@@ -1,6 +1,6 @@
 
 ;; This file is part of ola-egg.
-;; Copyright (C) 2014  John J. Foerch
+;; Copyright (C) 2014-2015  John J. Foerch
 ;;
 ;; ola-egg is free software: you can redistribute it and/or modify it
 ;; under the terms of the GNU Lesser General Public License as published
@@ -73,48 +73,16 @@
       ((dmxbuffer buffer))
     "C_return(buffer->Size());"))
 
-(define dmxbuffer-set/u8vector
+(define dmxbuffer-set!
   (case-lambda
    ((dmxbuffer data offset size)
     ((foreign-lambda* bool
-         ((dmxbuffer buffer) (nonnull-u8vector data)
+         ((dmxbuffer buffer) (nonnull-blob data)
           (unsigned-int offset) (unsigned-int size))
        "C_return(buffer->Set(&data[offset], size));")
      dmxbuffer data offset size))
    ((dmxbuffer data)
-    (dmxbuffer-set/u8vector dmxbuffer data 0 (u8vector-length data)))))
-
-(define dmxbuffer-set/u16vector
-  (case-lambda
-   ((dmxbuffer data offset size)
-    ((foreign-lambda* bool
-         ((dmxbuffer buffer) (nonnull-u16vector data)
-          (unsigned-int offset) (unsigned-int size))
-       "C_return(buffer->Set((uint8_t*)&data[offset], size * 2));")
-     dmxbuffer data offset size))
-   ((dmxbuffer data)
-    (dmxbuffer-set/u16vector dmxbuffer data 0 (u16vector-length data)))))
-
-(define dmxbuffer-set/u32vector
-  (case-lambda
-   ((dmxbuffer data offset size)
-    ((foreign-lambda* bool
-         ((dmxbuffer buffer) (nonnull-u32vector data)
-          (unsigned-int offset) (unsigned-int size))
-       "C_return(buffer->Set((uint8_t*)&data[offset], size * 4));")
-     dmxbuffer data offset size))
-   ((dmxbuffer data)
-    (dmxbuffer-set/u32vector dmxbuffer data 0 (u32vector-length data)))))
-
-(define (dmxbuffer-set! dmxbuffer data . args)
-  (apply
-   (cond
-    ((u8vector? data) dmxbuffer-set/u8vector)
-    ((u16vector? data) dmxbuffer-set/u16vector)
-    ((u32vector? data) dmxbuffer-set/u32vector)
-    (else
-     (error "Unsupported vector type passed to dmxbuffer-set!")))
-   dmxbuffer data args))
+    (dmxbuffer-set! dmxbuffer data 0 (blob-size data)))))
 
 ;; dmxbuffer-set-range-to-value - offset + value + length
 
