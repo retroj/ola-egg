@@ -23,6 +23,7 @@
           dmxbuffer-set! dmxbuffer-set-channel
           dmxbuffer-set-range!
           dmxbuffer-blackout dmxbuffer-size
+          streamingclient-options
           streamingclient streamingclient-setup
           streamingclient-stop
           streamingclient-send-dmx)
@@ -30,9 +31,10 @@
           (scheme case-lambda)
           (srfi 4)
           (srfi 99)
-          (only (chicken) blob-size getter-with-setter)
+          (only (chicken) and-let* blob-size getter-with-setter)
           (only (data-structures) alist-ref)
           (foreign)
           (foreigners)
+          (only (list-utils) plist->alist)
           (matchable))
   (include "ola-impl"))
