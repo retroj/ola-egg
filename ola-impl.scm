@@ -161,18 +161,25 @@
   streamingclient-options?
   (this streamingclient-options-this streamingclient-options-this-set!))
 
-(define streamingclient-options
+(define (streamingclient-options . keys)
   (let ((constructor
-         (foreign-lambda* (c-pointer "ola::client::StreamingClient::Options")
-             ((bool auto_start) (unsigned-short server_port))
-           "ola::client::StreamingClient::Options *o = new ola::client::StreamingClient::Options();"
-           "o->auto_start = auto_start;"
-           "o->server_port = (uint16_t)server_port;"
-           "C_return(o);")))
-    (case-lambda
-     (() (%streamingclient-options (constructor #f 9010)))
-     ((auto-start) (%streamingclient-options (constructor auto-start 9010)))
-     ((auto-start server-port) (%streamingclient-options (constructor auto-start server-port))))))
+         (foreign-lambda (c-pointer "ola::client::StreamingClient::Options")
+                         "new ola::client::StreamingClient::Options")))
+    (let ((keys (plist->alist keys))
+          (options (%streamingclient-options (constructor))))
+      (and-let* ((auto-start (assq auto-start: keys)))
+        ((foreign-lambda* void
+             (((c-pointer "ola::client::StreamingClient::Options") options)
+              (bool auto_start))
+           "options->auto_start = auto_start;")
+         (streamingclient-options-this options) (cdr auto-start)))
+      (and-let* ((server-port (assq server-port: keys)))
+        ((foreign-lambda* void
+             (((c-pointer "ola::client::StreamingClient::Options") options)
+              (unsigned-short server_port))
+           "options->server_port = (uint16_t)server_port;")
+         (streamingclient-options-this options) (cdr server-port)))
+      options)))
 
 (define-foreign-type streamingclient-options
   (instance ola::client::StreamingClient::Options :streamingclient-options))
@@ -188,13 +195,8 @@
              ((streamingclient-options options))
            "C_return(new ola::client::StreamingClient(*options));")))
     (match-lambda*
-     (() (%streamingclient (constructor (streamingclient-options))))
-     (((? boolean? auto-start))
-      (%streamingclient (constructor (streamingclient-options auto-start))))
-     (((? boolean? auto-start) (? number? server-port))
-      (%streamingclient (constructor (streamingclient-options auto-start server-port))))
-     (((? streamingclient-options? options))
-      (%streamingclient (constructor options))))))
+     (((? streamingclient-options? options)) (%streamingclient (constructor options)))
+     (keys (%streamingclient (constructor (apply streamingclient-options keys)))))))
 
 (define-foreign-type streamingclient
   (instance ola::client::StreamingClient :streamingclient))
