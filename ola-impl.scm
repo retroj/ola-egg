@@ -162,24 +162,24 @@
   (this streamingclient-options-this streamingclient-options-this-set!))
 
 (define (streamingclient-options . keys)
-  (let ((constructor
-         (foreign-lambda (c-pointer "ola::client::StreamingClient::Options")
-                         "new ola::client::StreamingClient::Options")))
-    (let ((keys (plist->alist keys))
-          (options (%streamingclient-options (constructor))))
-      (and-let* ((auto-start (assq auto-start: keys)))
-        ((foreign-lambda* void
-             (((c-pointer "ola::client::StreamingClient::Options") options)
-              (bool auto_start))
-           "options->auto_start = auto_start;")
-         (streamingclient-options-this options) (cdr auto-start)))
-      (and-let* ((server-port (assq server-port: keys)))
-        ((foreign-lambda* void
-             (((c-pointer "ola::client::StreamingClient::Options") options)
-              (unsigned-short server_port))
-           "options->server_port = (uint16_t)server_port;")
-         (streamingclient-options-this options) (cdr server-port)))
-      options)))
+  (let* ((constructor
+          (foreign-lambda (c-pointer "ola::client::StreamingClient::Options")
+                          "new ola::client::StreamingClient::Options"))
+         (options (%streamingclient-options (constructor)))
+         (keys (plist->alist keys)))
+    (and-let* ((auto-start (assq auto-start: keys)))
+      ((foreign-lambda* void
+           (((c-pointer "ola::client::StreamingClient::Options") options)
+            (bool auto_start))
+         "options->auto_start = auto_start;")
+       (streamingclient-options-this options) (cdr auto-start)))
+    (and-let* ((server-port (assq server-port: keys)))
+      ((foreign-lambda* void
+           (((c-pointer "ola::client::StreamingClient::Options") options)
+            (unsigned-short server_port))
+         "options->server_port = (uint16_t)server_port;")
+       (streamingclient-options-this options) (cdr server-port)))
+    options))
 
 (define-foreign-type streamingclient-options
   (instance ola::client::StreamingClient::Options :streamingclient-options))
