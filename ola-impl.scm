@@ -80,18 +80,17 @@
 ;; DmxBuffer
 ;;
 
-(define-record-type dmxbuffer
+(define-record-type :dmxbuffer
   (%dmxbuffer this)
   dmxbuffer?
   (this dmxbuffer-this dmxbuffer-this-set!))
 
-(define (dmxbuffer)
-  (%dmxbuffer
-   ((foreign-lambda (c-pointer "ola::DmxBuffer")
-                    "new ola::DmxBuffer"))))
-
 (define-foreign-type dmxbuffer
-  (instance ola::DmxBuffer dmxbuffer))
+  (instance ola::DmxBuffer :dmxbuffer))
+
+(define dmxbuffer
+  ;;XXX: construct with nothing, raw data + length, or another dmxbuffer
+  (foreign-lambda dmxbuffer "new ola::DmxBuffer"))
 
 (define dmxbuffer-set-channel
   (foreign-lambda* void
