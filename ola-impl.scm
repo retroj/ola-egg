@@ -189,14 +189,12 @@
   streamingclient?
   (this streamingclient-this streamingclient-this-set!))
 
-(define streamingclient
+(define (streamingclient . options)
   (let ((constructor
          (foreign-lambda* (c-pointer "ola::client::StreamingClient")
              ((streamingclient-options options))
            "C_return(new ola::client::StreamingClient(*options));")))
-    (match-lambda*
-     (((? streamingclient-options? options)) (%streamingclient (constructor options)))
-     (keys (%streamingclient (constructor (apply streamingclient-options keys)))))))
+    (%streamingclient (constructor (apply streamingclient-options options)))))
 
 (define-foreign-type streamingclient
   (instance ola::client::StreamingClient :streamingclient))
