@@ -172,16 +172,16 @@
          (keys (plist->alist keys)))
     (and-let* ((auto-start (assq auto-start: keys)))
       ((foreign-lambda* void
-           (((c-pointer "ola::client::StreamingClient::Options") options)
+           ((streamingclient-options options)
             (bool auto_start))
          "options->auto_start = auto_start;")
-       (streamingclient-options-this options) (cdr auto-start)))
+       options (cdr auto-start)))
     (and-let* ((server-port (assq server-port: keys)))
       ((foreign-lambda* void
-           (((c-pointer "ola::client::StreamingClient::Options") options)
+           ((streamingclient-options options)
             (unsigned-short server_port))
          "options->server_port = (uint16_t)server_port;")
-       (streamingclient-options-this options) (cdr server-port)))
+       options (cdr server-port)))
     options))
 
 (define-record-type :streamingclient
