@@ -161,6 +161,9 @@
   streamingclient-options?
   (this streamingclient-options-this streamingclient-options-this-set!))
 
+(define-foreign-type streamingclient-options
+  (instance ola::client::StreamingClient::Options :streamingclient-options))
+
 (define (streamingclient-options . keys)
   (let* ((constructor
           (foreign-lambda (c-pointer "ola::client::StreamingClient::Options")
@@ -181,13 +184,13 @@
        (streamingclient-options-this options) (cdr server-port)))
     options))
 
-(define-foreign-type streamingclient-options
-  (instance ola::client::StreamingClient::Options :streamingclient-options))
-
 (define-record-type :streamingclient
   (%streamingclient this)
   streamingclient?
   (this streamingclient-this streamingclient-this-set!))
+
+(define-foreign-type streamingclient
+  (instance ola::client::StreamingClient :streamingclient))
 
 (define (streamingclient . options)
   (let ((constructor
@@ -195,9 +198,6 @@
              ((streamingclient-options options))
            "C_return(new ola::client::StreamingClient(*options));")))
     (%streamingclient (constructor (apply streamingclient-options options)))))
-
-(define-foreign-type streamingclient
-  (instance ola::client::StreamingClient :streamingclient))
 
 (define streamingclient-setup
   (foreign-lambda* bool
