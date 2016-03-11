@@ -31,7 +31,7 @@
 ;;
 
 (define (make recordtype thisfield thisarg)
-  (recordtype thisarg))
+  ((rtd-constructor recordtype) thisarg))
 
 (define slot-ref
   (getter-with-setter
@@ -166,9 +166,9 @@
 
 (define (streamingclient-options . keys)
   (let* ((constructor
-          (foreign-lambda (c-pointer "ola::client::StreamingClient::Options")
+          (foreign-lambda streamingclient-options
                           "new ola::client::StreamingClient::Options"))
-         (options (%streamingclient-options (constructor)))
+         (options (constructor))
          (keys (plist->alist keys)))
     (and-let* ((auto-start (assq auto-start: keys)))
       ((foreign-lambda* void
@@ -194,10 +194,10 @@
 
 (define (streamingclient . options)
   (let ((constructor
-         (foreign-lambda* (c-pointer "ola::client::StreamingClient")
+         (foreign-lambda* streamingclient
              ((streamingclient-options options))
            "C_return(new ola::client::StreamingClient(*options));")))
-    (%streamingclient (constructor (apply streamingclient-options options)))))
+    (constructor (apply streamingclient-options options))))
 
 (define streamingclient-setup
   (foreign-lambda* bool
