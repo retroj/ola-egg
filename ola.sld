@@ -24,6 +24,7 @@
           dmxbuffer-set-range!
           dmxbuffer-blackout dmxbuffer-size
           streamingclient streamingclient-setup
+          streamingclient-stop
           streamingclient-send-dmx)
   (import (scheme base)
           (scheme case-lambda)

@@ -179,6 +179,11 @@
       ((streamingclient client))
     "C_return(client->Setup());"))
 
+(define streamingclient-stop
+  (foreign-lambda* void
+      ((streamingclient client))
+    "client->Stop();"))
+
 (define streamingclient-send-dmx
   (foreign-lambda* bool
       ((streamingclient client) (unsigned-int universe) (dmxbuffer data))
