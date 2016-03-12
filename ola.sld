@@ -19,6 +19,7 @@
 (define-library (ola)
   (export init-logging
           dmxbuffer
+          dmxbuffer?
           dmxbuffer-get
           dmxbuffer-set!
           dmxbuffer-set-channel!
