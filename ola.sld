@@ -20,7 +20,8 @@
   (export init-logging
           dmxbuffer
           dmxbuffer-get
-          dmxbuffer-set! dmxbuffer-set-channel
+          dmxbuffer-set!
+          dmxbuffer-set-channel!
           dmxbuffer-set-range!
           dmxbuffer-blackout dmxbuffer-size
           dmxbuffer-reset!

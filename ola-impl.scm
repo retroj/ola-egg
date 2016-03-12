@@ -92,11 +92,6 @@
   ;;XXX: construct with nothing, raw data + length, or another dmxbuffer
   (foreign-lambda dmxbuffer "new ola::DmxBuffer"))
 
-(define dmxbuffer-set-channel
-  (foreign-lambda* void
-      ((dmxbuffer buffer) (unsigned-int channel) (unsigned-byte data))
-    "buffer->SetChannel(channel, data);"))
-
 (define dmxbuffer-blackout
   (foreign-lambda* bool
       ((dmxbuffer buffer))
@@ -118,6 +113,11 @@
    ((dmxbuffer data)
     (dmxbuffer-set! dmxbuffer data 0 (blob-size data)))))
 
+(define dmxbuffer-set-channel!
+  (foreign-lambda* void
+      ((dmxbuffer buffer) (unsigned-int channel) (unsigned-byte data))
+    "buffer->SetChannel(channel, data);"))
+
 ;; dmxbuffer-set-range-to-value - offset + value + length
 
 (define dmxbuffer-set-range!
@@ -131,9 +131,6 @@
      dmxbuffer i data offset length))
    ((dmxbuffer i data)
     (dmxbuffer-set-range! dmxbuffer i data 0 (blob-size data)))))
-
-
-;; dmxbuffer-set-channel - channel + value
 
 ;; dmxbuffer-get - dataptr + length
 ;; dmxbuffer-get() -> string
