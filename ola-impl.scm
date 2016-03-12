@@ -145,7 +145,7 @@
 
 ;; dmxbuffer-get-range - channel + dataptr + length
 
-(define dmxbuffer-reset
+(define dmxbuffer-reset!
   (foreign-lambda* void ((dmxbuffer buffer))
     "buffer->Reset();"))
 

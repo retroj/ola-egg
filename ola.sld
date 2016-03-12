@@ -23,7 +23,7 @@
           dmxbuffer-set! dmxbuffer-set-channel
           dmxbuffer-set-range!
           dmxbuffer-blackout dmxbuffer-size
-          dmxbuffer-reset
+          dmxbuffer-reset!
           streamingclient streamingclient-setup
           streamingclient-stop
           streamingclient-send-dmx)
