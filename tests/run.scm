@@ -1,0 +1,23 @@
+
+(use test)
+
+(load "ola.so")
+(import ola)
+
+(test-begin "ola")
+
+(test-group
+ "dmxbuffer-htp-merge!"
+ (let ((a (dmxbuffer))
+       (b (dmxbuffer)))
+   (dmxbuffer-set-channel! a 0 255)
+   (dmxbuffer-set-channel! a 1 0)
+   (dmxbuffer-set-channel! b 0 255)
+   (dmxbuffer-set-channel! b 1 255)
+   (dmxbuffer-htp-merge! a b)
+   (test "does merge" 255 (dmxbuffer-get a 1))))
+
+
+(test-end "ola")
+
+(test-exit)

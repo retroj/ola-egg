@@ -132,6 +132,11 @@
    ((dmxbuffer i data)
     (dmxbuffer-set-range! dmxbuffer i data 0 (blob-size data)))))
 
+(define dmxbuffer-htp-merge!
+  (foreign-lambda* bool
+      ((dmxbuffer buffer) (dmxbuffer other))
+    "C_return(buffer->HTPMerge(*other));"))
+
 ;; dmxbuffer-get - dataptr + length
 ;; dmxbuffer-get() -> string
 
