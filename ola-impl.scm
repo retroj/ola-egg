@@ -99,8 +99,8 @@
 
 (define dmxbuffer-blackout
   (foreign-lambda* bool
-      ((dmxbuffer data))
-    "C_return(data->Blackout());"))
+      ((dmxbuffer buffer))
+    "C_return(buffer->Blackout());"))
 
 (define dmxbuffer-size
   (foreign-lambda* unsigned-int
