@@ -7,6 +7,11 @@
 (test-begin "ola")
 
 (test-group
+ "dmxbuffer"
+ (test-assert "constructs dmxbuffer" (dmxbuffer? (dmxbuffer)))
+ (test-assert "clone dmxbuffer" (dmxbuffer? (dmxbuffer (dmxbuffer)))))
+
+(test-group
  "dmxbuffer-htp-merge!"
  (let ((a (dmxbuffer))
        (b (dmxbuffer)))

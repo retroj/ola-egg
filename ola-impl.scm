@@ -89,8 +89,13 @@
   (instance ola::DmxBuffer :dmxbuffer))
 
 (define dmxbuffer
-  ;;XXX: construct with nothing, raw data + length, or another dmxbuffer
-  (foreign-lambda dmxbuffer "new ola::DmxBuffer"))
+  ;;XXX: other constructors, like blob + length
+  (match-lambda*
+   (() ((foreign-lambda dmxbuffer "new ola::DmxBuffer")))
+   (((? dmxbuffer? buffer))
+    ((foreign-lambda* dmxbuffer ((dmxbuffer buffer))
+       "C_return(new ola::DmxBuffer(*buffer));")
+     buffer))))
 
 (define dmxbuffer-blackout
   (foreign-lambda* bool
