@@ -97,7 +97,7 @@
        "C_return(new ola::DmxBuffer(*buffer));")
      buffer))))
 
-(define dmxbuffer-blackout
+(define dmxbuffer-blackout!
   (foreign-lambda* bool
       ((dmxbuffer buffer))
     "C_return(buffer->Blackout());"))
