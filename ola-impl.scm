@@ -160,7 +160,7 @@
 ;; dmxbuffer-get - dataptr + length
 ;; dmxbuffer-get() -> string
 
-(define dmxbuffer-get
+(define dmxbuffer-get-channel
   (foreign-lambda* unsigned-byte
       ((dmxbuffer buffer) (unsigned-int channel))
     "C_return(buffer->Get(channel));"))
