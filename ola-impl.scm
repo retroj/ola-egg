@@ -22,6 +22,20 @@
 
 
 ;;
+;; Errors
+;;
+
+(define (ola-error loc msg . args)
+  (signal
+   (make-composite-condition
+    (make-property-condition 'ola)
+    (make-property-condition 'exn
+                             'location loc
+                             'message msg
+                             'arguments args))))
+
+
+;;
 ;; Foreign Instance Interface
 ;;
 ;; The 'instance' foreign type requires an object that can be passed to
@@ -253,6 +267,8 @@
                  (apply streamingclient-options options))))
     (set-finalizer! client (foreign-lambda* void ((streamingclient client))
                              "delete client;"))
+    (unless (streamingclient-setup client)
+      (ola-error 'streamingclient "OLA StreamingClient setup failed"))
     client))
 
 (define streamingclient-setup

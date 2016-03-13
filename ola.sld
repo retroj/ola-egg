@@ -34,7 +34,7 @@
           dmxbuffer-size
           dmxbuffer-reset!
           dmxbuffer->string
-          streamingclient streamingclient-setup
+          streamingclient
           streamingclient-stop
           streamingclient-send-dmx)
   (import (scheme base)
@@ -42,7 +42,9 @@
           (srfi 4)
           (srfi 99)
           (only (chicken) and-let* blob? blob-size
-                getter-with-setter make-blob set-finalizer!)
+                getter-with-setter make-blob
+                make-composite-condition make-property-condition
+                set-finalizer! signal)
           (only (data-structures) alist-ref)
           (foreign)
           (foreigners)
