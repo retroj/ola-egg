@@ -165,8 +165,6 @@ far are DmxBuffer and StreamingClient.
 ```scheme
 (use ola miscmacros)
 (let ((client (streamingclient auto-start: #f)))
-  (unless (streamingclient-setup client)
-    (error "OLA StreamingClient setup failed"))
   (streamingclient-send-dmx client 0 (dmxbuffer (string->blob "AeIoUaEiO"))))
 ```
 
