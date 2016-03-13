@@ -138,6 +138,11 @@
       ((dmxbuffer buffer) (unsigned-int channel) (unsigned-byte data))
     "buffer->SetChannel(channel, data);"))
 
+(define dmxbuffer-set-from-string!
+  (foreign-lambda* bool ((dmxbuffer buffer) (nonnull-c-string s))
+    "std::string ss = s;"
+    "C_return(buffer->SetFromString(ss));"))
+
 (define dmxbuffer-set-range!
   (case-lambda
    ((dmxbuffer i data offset length)

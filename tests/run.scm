@@ -55,6 +55,12 @@
    (test-assert "contents" (dmxbuffer=? a b))
    (test-assert "contents !=" (not (dmxbuffer=? a c)))))
 
+(test-group
+ "dmxbuffer-set-from-string!"
+ (let ((a (dmxbuffer)))
+   (dmxbuffer-set-from-string! a "123")
+   (test "produces expected contents" 123 (dmxbuffer-get-channel a 0))))
+
 (test-end "ola")
 
 (test-exit)

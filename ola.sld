@@ -26,6 +26,7 @@
           dmxbuffer-get-range
           dmxbuffer-set!
           dmxbuffer-set-channel!
+          dmxbuffer-set-from-string!
           dmxbuffer-set-range!
           dmxbuffer-set-range-to-value!
           dmxbuffer-htp-merge!
