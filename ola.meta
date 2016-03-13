@@ -1,6 +1,6 @@
 ;; -*- scheme -*-
 
-((license "LGPL")
+((license "LGPL-3")
  (category io)
  (author "John J. Foerch")
  (synopsis "bindings for libola")
