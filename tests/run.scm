@@ -28,6 +28,10 @@
    (dmxbuffer-set-range-to-value! a 0 3 2)
    (test "works" 3 (dmxbuffer-get a 1))))
 
+(test-group
+ "dmxbuffer->string"
+ (test-assert "returns string" (string? (dmxbuffer->string (dmxbuffer)))))
+
 (test-end "ola")
 
 (test-exit)

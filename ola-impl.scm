@@ -164,8 +164,13 @@
   (foreign-lambda* void ((dmxbuffer buffer))
     "buffer->Reset();"))
 
-;; dmxbuffer-to-string
-
+(define dmxbuffer->string
+  (foreign-lambda* c-string* ((dmxbuffer buffer))
+    "std::string s = buffer->ToString();"
+    "char* c = new char[s.size() + 1];"
+    "std::copy(s.begin(), s.end(), c);"
+    "c[s.size()] = 0;"
+    "C_return(c);"))
 
 
 ;;

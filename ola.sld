@@ -29,6 +29,7 @@
           dmxbuffer-blackout!
           dmxbuffer-size
           dmxbuffer-reset!
+          dmxbuffer->string
           streamingclient streamingclient-setup
           streamingclient-stop
           streamingclient-send-dmx)
