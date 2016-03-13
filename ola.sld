@@ -35,7 +35,7 @@
           (scheme case-lambda)
           (srfi 4)
           (srfi 99)
-          (only (chicken) and-let* blob-size getter-with-setter)
+          (only (chicken) and-let* blob-size getter-with-setter set-finalizer!)
           (only (data-structures) alist-ref)
           (foreign)
           (foreigners)

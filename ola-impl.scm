@@ -178,6 +178,8 @@
                           "new ola::client::StreamingClient::Options"))
          (options (constructor))
          (keys (plist->alist keys)))
+    (set-finalizer! options (foreign-lambda* void ((streamingclient-options options))
+                              "delete options;"))
     (and-let* ((auto-start (assq auto-start: keys)))
       ((foreign-lambda* void
            ((streamingclient-options options)
