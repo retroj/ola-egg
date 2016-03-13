@@ -157,8 +157,15 @@
       ((dmxbuffer buffer) (dmxbuffer other))
     "C_return(buffer->HTPMerge(*other));"))
 
-;; dmxbuffer-get - dataptr + length
-;; dmxbuffer-get() -> string
+(define (dmxbuffer-get buffer)
+  (let* ((size (dmxbuffer-size buffer))
+         (blob (make-blob size)))
+    ((foreign-lambda* void ((dmxbuffer buffer)
+                            (nonnull-blob data)
+                            (unsigned-int length))
+       "buffer->Get(data, &length);")
+     buffer blob size)
+    blob))
 
 (define dmxbuffer-get-channel
   (foreign-lambda* unsigned-byte

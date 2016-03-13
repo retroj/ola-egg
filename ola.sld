@@ -20,6 +20,7 @@
   (export init-logging
           dmxbuffer
           dmxbuffer?
+          dmxbuffer-get
           dmxbuffer-get-channel
           dmxbuffer-set!
           dmxbuffer-set-channel!
@@ -37,7 +38,8 @@
           (scheme case-lambda)
           (srfi 4)
           (srfi 99)
-          (only (chicken) and-let* blob? blob-size getter-with-setter set-finalizer!)
+          (only (chicken) and-let* blob? blob-size
+                getter-with-setter make-blob set-finalizer!)
           (only (data-structures) alist-ref)
           (foreign)
           (foreigners)

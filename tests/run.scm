@@ -35,6 +35,11 @@
  "dmxbuffer->string"
  (test-assert "returns string" (string? (dmxbuffer->string (dmxbuffer)))))
 
+(test-group
+ "dmxbuffer-get"
+ (test-assert "returns blob" (blob? (dmxbuffer-get (dmxbuffer))))
+ (test "has expected contents" " " (blob->string (dmxbuffer-get (dmxbuffer (string->blob " "))))))
+
 (test-end "ola")
 
 (test-exit)
