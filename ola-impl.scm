@@ -16,6 +16,7 @@
 ;; License along with ola-egg.  If not, see
 ;; <http://www.gnu.org/licenses/>.
 
+(foreign-declare "#include <ola/base/Version.h>")
 (foreign-declare "#include <ola/DmxBuffer.h>")
 (foreign-declare "#include <ola/Logging.h>")
 (foreign-declare "#include <ola/client/StreamingClient.h>")
@@ -53,6 +54,25 @@
      ((rtd-accessor (record-rtd instance) field) instance))
    (lambda (instance field value)
      ((rtd-mutator (record-rtd instance) field) instance value))))
+
+
+;;
+;; Version
+;;
+
+(define (ola-version)
+  (list
+   ((foreign-lambda unsigned-int "ola::base::Version::GetMajor"))
+   ((foreign-lambda unsigned-int "ola::base::Version::GetMinor"))
+   ((foreign-lambda unsigned-int "ola::base::Version::GetRevision"))))
+
+(define ola-version-string
+  (foreign-lambda* c-string* ()
+    "std::string s = ola::base::Version::GetVersion();"
+    "char* c = new char[s.size() + 1];"
+    "std::copy(s.begin(), s.end(), c);"
+    "c[s.size()] = 0;"
+    "C_return(c);"))
 
 
 ;;

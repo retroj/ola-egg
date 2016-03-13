@@ -75,6 +75,11 @@
    (dmxbuffer-set-from-string! a "123")
    (test "produces expected contents" 123 (dmxbuffer-get-channel a 0))))
 
+(test-group
+ "ola-version"
+ (test-assert "ola-version-string returns a string" (string? (ola-version-string)))
+ (test-assert "returns a list" (list? (ola-version))))
+
 (test-end "ola")
 
 (test-exit)

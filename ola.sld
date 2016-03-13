@@ -17,7 +17,9 @@
 ;; <http://www.gnu.org/licenses/>.
 
 (define-library (ola)
-  (export init-logging
+  (export ola-version
+          ola-version-string
+          init-logging
           dmxbuffer
           dmxbuffer?
           dmxbuffer=?
