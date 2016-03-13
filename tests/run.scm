@@ -10,7 +10,9 @@
 (test-group
  "dmxbuffer"
  (test-assert "constructs dmxbuffer" (dmxbuffer? (dmxbuffer)))
- (test-assert "clone dmxbuffer" (dmxbuffer? (dmxbuffer (dmxbuffer)))))
+ (test-assert "clone dmxbuffer" (dmxbuffer? (dmxbuffer (dmxbuffer))))
+ (test-assert "from blob" (dmxbuffer? (dmxbuffer (string->blob " "))))
+ (test "from blob (2)" #x20 (dmxbuffer-get (dmxbuffer (string->blob " ")) 0)))
 
 (test-group
  "dmxbuffer-htp-merge!"
