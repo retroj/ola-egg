@@ -1,7 +1,15 @@
 ;; -*- scheme -*-
 
 ((license "LGPL")
- (category ffi)
+ (category io)
  (author "John J. Foerch")
  (synopsis "bindings for libola")
+ (depends
+  r7rs
+  srfi-99
+  foreigners
+  list-utils
+  matchable)
+ (test-depends
+  test)
  (foreign-depends "libola-dev"))
