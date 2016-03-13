@@ -22,6 +22,11 @@
    (dmxbuffer-htp-merge! a b)
    (test "does merge" 255 (dmxbuffer-get a 1))))
 
+(test-group
+ "dmxbuffer-set-range-to-value!"
+ (let ((a (dmxbuffer)))
+   (dmxbuffer-set-range-to-value! a 0 3 2)
+   (test "works" 3 (dmxbuffer-get a 1))))
 
 (test-end "ola")
 

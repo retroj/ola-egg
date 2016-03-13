@@ -127,8 +127,6 @@
       ((dmxbuffer buffer) (unsigned-int channel) (unsigned-byte data))
     "buffer->SetChannel(channel, data);"))
 
-;; dmxbuffer-set-range-to-value - offset + value + length
-
 (define dmxbuffer-set-range!
   (case-lambda
    ((dmxbuffer i data offset length)
@@ -140,6 +138,12 @@
      dmxbuffer i data offset length))
    ((dmxbuffer i data)
     (dmxbuffer-set-range! dmxbuffer i data 0 (blob-size data)))))
+
+(define dmxbuffer-set-range-to-value!
+  (foreign-lambda* bool
+      ((dmxbuffer buffer) (unsigned-int offset)
+       (unsigned-byte data) (unsigned-int length))
+    "C_return(buffer->SetRangeToValue(offset, data, length));"))
 
 (define dmxbuffer-htp-merge!
   (foreign-lambda* bool

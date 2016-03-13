@@ -24,6 +24,7 @@
           dmxbuffer-set!
           dmxbuffer-set-channel!
           dmxbuffer-set-range!
+          dmxbuffer-set-range-to-value!
           dmxbuffer-htp-merge!
           dmxbuffer-blackout!
           dmxbuffer-size
