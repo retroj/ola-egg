@@ -108,15 +108,35 @@
   (foreign-lambda* bool ((dmxbuffer a) (dmxbuffer b))
     "C_return(*a == *b);"))
 
-(define dmxbuffer-blackout!
-  (foreign-lambda* bool
-      ((dmxbuffer buffer))
-    "C_return(buffer->Blackout());"))
-
 (define dmxbuffer-size
   (foreign-lambda* unsigned-int
       ((dmxbuffer buffer))
     "C_return(buffer->Size());"))
+
+(define (dmxbuffer-get buffer)
+  (let* ((size (dmxbuffer-size buffer))
+         (blob (make-blob size)))
+    ((foreign-lambda* void ((dmxbuffer buffer)
+                            (nonnull-blob data)
+                            (unsigned-int length))
+       "buffer->Get(data, &length);")
+     buffer blob size)
+    blob))
+
+(define dmxbuffer-get-channel
+  (foreign-lambda* unsigned-byte
+      ((dmxbuffer buffer) (unsigned-int channel))
+    "C_return(buffer->Get(channel));"))
+
+(define (dmxbuffer-get-range buffer offset length)
+  (let ((blob (make-blob length)))
+    ((foreign-lambda* void ((dmxbuffer buffer)
+                            (nonnull-blob data)
+                            (unsigned-int offset)
+                            (unsigned-int length))
+       "buffer->GetRange(offset, data, &length);")
+     buffer blob offset length)
+    blob))
 
 (define dmxbuffer-set!
   (match-lambda*
@@ -166,30 +186,10 @@
       ((dmxbuffer buffer) (dmxbuffer other))
     "C_return(buffer->HTPMerge(*other));"))
 
-(define (dmxbuffer-get buffer)
-  (let* ((size (dmxbuffer-size buffer))
-         (blob (make-blob size)))
-    ((foreign-lambda* void ((dmxbuffer buffer)
-                            (nonnull-blob data)
-                            (unsigned-int length))
-       "buffer->Get(data, &length);")
-     buffer blob size)
-    blob))
-
-(define dmxbuffer-get-channel
-  (foreign-lambda* unsigned-byte
-      ((dmxbuffer buffer) (unsigned-int channel))
-    "C_return(buffer->Get(channel));"))
-
-(define (dmxbuffer-get-range buffer offset length)
-  (let ((blob (make-blob length)))
-    ((foreign-lambda* void ((dmxbuffer buffer)
-                            (nonnull-blob data)
-                            (unsigned-int offset)
-                            (unsigned-int length))
-       "buffer->GetRange(offset, data, &length);")
-     buffer blob offset length)
-    blob))
+(define dmxbuffer-blackout!
+  (foreign-lambda* bool
+      ((dmxbuffer buffer))
+    "C_return(buffer->Blackout());"))
 
 (define dmxbuffer-reset!
   (foreign-lambda* void ((dmxbuffer buffer))
