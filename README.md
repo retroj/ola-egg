@@ -145,13 +145,11 @@ far are DmxBuffer and StreamingClient.
 
 * **(streamingclient [auto-start: bool] [server-port: port]) => streamingclient**
 
-    Constructs a client.  Auto-start is whether to start olad if it is not
-    already running, default true.  Server-port is the port to use,
-    default 9010.
-
-* **(streamingclient-setup streamingclient) => bool**
-
-    Required initialization of a streamingclient.
+    Constructs a client and attempts to establish a connection to the ola
+    daemon.  Auto-start is whether to start olad if it is not already
+    running, default true.  Server-port is the port to use, default 9010.
+    Signals an '(exn ola)' condition if it fails to connect to the ola
+    daemon.
 
 * **(streamingclient-stop streamingclient) => undefined**
 
@@ -175,7 +173,7 @@ far are DmxBuffer and StreamingClient.
 
 ## License
 
-LGPL 3
+LGPL-3
 
 
 ## Version History
