@@ -115,15 +115,19 @@
     "C_return(buffer->Size());"))
 
 (define dmxbuffer-set!
-  (case-lambda
-   ((dmxbuffer data offset size)
+  (match-lambda*
+   ((buffer (? blob? data) offset size)
     ((foreign-lambda* bool
          ((dmxbuffer buffer) (nonnull-blob data)
           (unsigned-int offset) (unsigned-int size))
        "C_return(buffer->Set(&data[offset], size));")
-     dmxbuffer data offset size))
-   ((dmxbuffer data)
-    (dmxbuffer-set! dmxbuffer data 0 (blob-size data)))))
+     buffer data offset size))
+   ((buffer (? blob? data))
+    (dmxbuffer-set! buffer data 0 (blob-size data)))
+   ((buffer (? dmxbuffer? other))
+    ((foreign-lambda* bool ((dmxbuffer buffer) (dmxbuffer other))
+       "C_return(buffer->Set(*other));")
+     buffer other))))
 
 (define dmxbuffer-set-channel!
   (foreign-lambda* void
