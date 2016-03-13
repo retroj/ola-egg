@@ -40,6 +40,12 @@
  (test-assert "returns blob" (blob? (dmxbuffer-get (dmxbuffer))))
  (test "has expected contents" " " (blob->string (dmxbuffer-get (dmxbuffer (string->blob " "))))))
 
+(test-group
+ "dmxbuffer-get-range"
+ (test-assert "returns blob" (blob? (dmxbuffer-get-range (dmxbuffer) 0 1)))
+ (test "has expected contents" "1"
+       (blob->string (dmxbuffer-get-range (dmxbuffer (string->blob "123")) 0 1))))
+
 (test-end "ola")
 
 (test-exit)

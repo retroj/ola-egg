@@ -172,7 +172,15 @@
       ((dmxbuffer buffer) (unsigned-int channel))
     "C_return(buffer->Get(channel));"))
 
-;; dmxbuffer-get-range - channel + dataptr + length
+(define (dmxbuffer-get-range buffer offset length)
+  (let ((blob (make-blob length)))
+    ((foreign-lambda* void ((dmxbuffer buffer)
+                            (nonnull-blob data)
+                            (unsigned-int offset)
+                            (unsigned-int length))
+       "buffer->GetRange(offset, data, &length);")
+     buffer blob offset length)
+    blob))
 
 (define dmxbuffer-reset!
   (foreign-lambda* void ((dmxbuffer buffer))
