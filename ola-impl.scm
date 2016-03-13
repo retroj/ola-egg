@@ -104,6 +104,10 @@
                              "delete buffer;"))
     buffer))
 
+(define dmxbuffer=?
+  (foreign-lambda* bool ((dmxbuffer a) (dmxbuffer b))
+    "C_return(*a == *b);"))
+
 (define dmxbuffer-blackout!
   (foreign-lambda* bool
       ((dmxbuffer buffer))

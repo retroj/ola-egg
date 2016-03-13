@@ -46,6 +46,15 @@
  (test "has expected contents" "1"
        (blob->string (dmxbuffer-get-range (dmxbuffer (string->blob "123")) 0 1))))
 
+(test-group
+ "dmxbuffer=?"
+ (let ((a (dmxbuffer (string->blob "123")))
+       (b (dmxbuffer (string->blob "123")))
+       (c (dmxbuffer (string->blob "124"))))
+   (test-assert "identity" (dmxbuffer=? a a))
+   (test-assert "contents" (dmxbuffer=? a b))
+   (test-assert "contents !=" (not (dmxbuffer=? a c)))))
+
 (test-end "ola")
 
 (test-exit)
