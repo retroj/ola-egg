@@ -2,6 +2,7 @@
 (use test)
 
 (load "./ola.so")
+(load "./ola.import.so")
 (import ola)
 
 (test-begin "ola")
