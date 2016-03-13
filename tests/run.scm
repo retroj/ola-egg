@@ -1,8 +1,22 @@
 
-(use test)
+(use (srfi 1) test)
 
-(load "./ola.so")
-(load "./ola.import.so")
+(define (load-ola-libs libs)
+  (for-each
+   (lambda (lib)
+     (print "Loading " lib)
+     (load lib))
+   libs))
+
+(cond
+ ((find (lambda (libs) (every file-exists? libs))
+        (list '("./ola.so" "./ola.import.so")
+              '("../ola.so" "../ola.import.so")))
+  => load-ola-libs)
+ (else
+  (print "Warning: testing system-installed ola egg")
+  (use ola)))
+
 (import ola)
 
 (test-begin "ola")
