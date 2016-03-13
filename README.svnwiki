@@ -157,7 +157,7 @@ Sends contents of dmxbuffer to the given universe on streamingclient.
 == Examples
 
 <enscript>
-(use ola miscmacros)
+(use ola)
 (let ((client (streamingclient auto-start: #f)))
   (streamingclient-send-dmx client 0 (dmxbuffer (string->blob "AeIoUaEiO"))))
 </enscript>

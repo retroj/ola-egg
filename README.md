@@ -163,7 +163,7 @@ far are DmxBuffer and StreamingClient.
 ## Examples
 
 ```scheme
-(use ola miscmacros)
+(use ola)
 (let ((client (streamingclient auto-start: #f)))
   (streamingclient-send-dmx client 0 (dmxbuffer (string->blob "AeIoUaEiO"))))
 ```
