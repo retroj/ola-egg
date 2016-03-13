@@ -203,11 +203,13 @@
   (instance ola::client::StreamingClient :streamingclient))
 
 (define (streamingclient . options)
-  (let ((constructor
-         (foreign-lambda* streamingclient
-             ((streamingclient-options options))
-           "C_return(new ola::client::StreamingClient(*options));")))
-    (constructor (apply streamingclient-options options))))
+  (let ((client ((foreign-lambda* streamingclient
+                     ((streamingclient-options options))
+                   "C_return(new ola::client::StreamingClient(*options));")
+                 (apply streamingclient-options options))))
+    (set-finalizer! client (foreign-lambda* void ((streamingclient client))
+                             "delete client;"))
+    client))
 
 (define streamingclient-setup
   (foreign-lambda* bool
