@@ -28,6 +28,16 @@ far are DmxBuffer and StreamingClient.
 
 
 ## API
+### Version
+
+* **(ola-version) => (major minor revision)**
+
+Return ola's version as a list.
+
+* **(ola-version-string) => string**
+
+Return ola's version as a string.
+
 ### Logging
 
 * **(init-logging [level] [output]) => bool**

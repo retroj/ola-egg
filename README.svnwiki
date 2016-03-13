@@ -29,6 +29,16 @@ far are DmxBuffer and StreamingClient.
 
 
 == API
+=== Version
+
+<procedure>(ola-version) => (major minor revision)</procedure>
+
+Return ola's version as a list.
+
+<procedure>(ola-version-string) => string</procedure>
+
+Return ola's version as a string.
+
 === Logging
 
 <procedure>(init-logging [level] [output]) => bool</procedure>
