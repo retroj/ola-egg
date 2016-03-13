@@ -3,3 +3,4 @@
 (repo git "git://github.com/retroj/ola-egg.git")
 (uri targz "https://github.com/retroj/ola-egg/tarball/{egg-release}")
 (release "0.1")
+(release "0.2")
