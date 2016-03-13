@@ -16,11 +16,11 @@ far are DmxBuffer and StreamingClient.
 ## Requirements
 ### Chicken Eggs
 
-* [[r7rs]]
-* [[srfi-99]]
-* [[foreigners]]
-* [[list-utils]]
-* [[matchable]]
+* r7rs
+* srfi-99
+* foreigners
+* list-utils
+* matchable
 
 ### C Headers
 
