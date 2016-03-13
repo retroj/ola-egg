@@ -88,14 +88,18 @@
 (define-foreign-type dmxbuffer
   (instance ola::DmxBuffer :dmxbuffer))
 
-(define dmxbuffer
+(define (dmxbuffer . args)
   ;;XXX: other constructors, like blob + length
-  (match-lambda*
-   (() ((foreign-lambda dmxbuffer "new ola::DmxBuffer")))
-   (((? dmxbuffer? buffer))
-    ((foreign-lambda* dmxbuffer ((dmxbuffer buffer))
-       "C_return(new ola::DmxBuffer(*buffer));")
-     buffer))))
+  (let ((buffer
+         (match args
+           (() ((foreign-lambda dmxbuffer "new ola::DmxBuffer")))
+           (((? dmxbuffer? buffer))
+            ((foreign-lambda* dmxbuffer ((dmxbuffer buffer))
+               "C_return(new ola::DmxBuffer(*buffer));")
+             buffer)))))
+    (set-finalizer! buffer (foreign-lambda* void ((dmxbuffer buffer))
+                             "delete buffer;"))
+    buffer))
 
 (define dmxbuffer-blackout!
   (foreign-lambda* bool
