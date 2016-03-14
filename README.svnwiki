@@ -8,6 +8,8 @@
 Basic bindings for libola, Open Lighting Architecture.  Classes covered so
 far are DmxBuffer and StreamingClient.
 
+For bug reports, feature requests, and development versions, visit the
+[[https://github.com/retroj/ola-egg/|github project page]].
 
 == Authors
 
