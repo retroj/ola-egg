@@ -72,7 +72,7 @@ Construct a new dmxbuffer with the same contents as other-dmxbuffer.
 
 <procedure>(dmxbuffer blob) => dmxbuffer</procedure>
 
-Contents a new dmxbuffer with the same contents as blob.
+Constructs a new dmxbuffer with the same contents as blob.
 
 <procedure>(dmxbuffer? dmxbuffer) => bool</procedure>
 

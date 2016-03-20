@@ -71,7 +71,7 @@ Return ola's version as a string.
 
 * **(dmxbuffer blob) => dmxbuffer**
 
-    Contents a new dmxbuffer with the same contents as blob.
+    Constructs a new dmxbuffer with the same contents as blob.
 
 * **(dmxbuffer? dmxbuffer) => bool**
 
