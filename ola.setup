@@ -11,4 +11,4 @@
 (install-extension
     'ola
   '("ola.so" "ola.import.so")
-  '((version 0.3)))
+  '((version 0.4)))
