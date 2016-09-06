@@ -130,10 +130,10 @@
             ((foreign-lambda* dmxbuffer ((dmxbuffer buffer))
                "C_return(new ola::DmxBuffer(*buffer));")
              buffer))
-           (((? blob? blob))
-            ((foreign-lambda* dmxbuffer ((nonnull-blob data) (unsigned-int length))
+           (((? bytevector? data))
+            ((foreign-lambda* dmxbuffer ((nonnull-u8vector data) (unsigned-int length))
                "C_return(new ola::DmxBuffer(data, length));")
-             blob (blob-size blob))))))
+             data (bytevector-length data))))))
     (set-finalizer! buffer (foreign-lambda* void ((dmxbuffer buffer))
                              "delete buffer;"))
     buffer))
@@ -149,13 +149,13 @@
 
 (define (dmxbuffer-get buffer)
   (let* ((size (dmxbuffer-size buffer))
-         (blob (make-blob size)))
+         (data (make-bytevector size)))
     ((foreign-lambda* void ((dmxbuffer buffer)
-                            (nonnull-blob data)
+                            (nonnull-u8vector data)
                             (unsigned-int length))
        "buffer->Get(data, &length);")
-     buffer blob size)
-    blob))
+     buffer data size)
+    data))
 
 (define dmxbuffer-get-channel
   (foreign-lambda* unsigned-byte
@@ -163,25 +163,25 @@
     "C_return(buffer->Get(channel));"))
 
 (define (dmxbuffer-get-range buffer offset length)
-  (let ((blob (make-blob length)))
+  (let ((data (make-bytevector length)))
     ((foreign-lambda* void ((dmxbuffer buffer)
-                            (nonnull-blob data)
+                            (nonnull-u8vector data)
                             (unsigned-int offset)
                             (unsigned-int length))
        "buffer->GetRange(offset, data, &length);")
-     buffer blob offset length)
-    blob))
+     buffer data offset length)
+    data))
 
 (define dmxbuffer-set!
   (match-lambda*
-   ((buffer (? blob? data) offset size)
+   ((buffer (? bytevector? data) offset size)
     ((foreign-lambda* bool
-         ((dmxbuffer buffer) (nonnull-blob data)
+         ((dmxbuffer buffer) (nonnull-u8vector data)
           (unsigned-int offset) (unsigned-int size))
        "C_return(buffer->Set(&data[offset], size));")
      buffer data offset size))
-   ((buffer (? blob? data))
-    (dmxbuffer-set! buffer data 0 (blob-size data)))
+   ((buffer (? bytevector? data))
+    (dmxbuffer-set! buffer data 0 (bytevector-length data)))
    ((buffer (? dmxbuffer? other))
     ((foreign-lambda* bool ((dmxbuffer buffer) (dmxbuffer other))
        "C_return(buffer->Set(*other));")
@@ -202,12 +202,12 @@
    ((dmxbuffer i data offset length)
     ((foreign-lambda* bool
          ((dmxbuffer buffer) (unsigned-int i)
-          (nonnull-blob data) (unsigned-int offset)
+          (nonnull-u8vector data) (unsigned-int offset)
           (unsigned-int length))
        "C_return(buffer->SetRange(i, &data[offset], length));")
      dmxbuffer i data offset length))
    ((dmxbuffer i data)
-    (dmxbuffer-set-range! dmxbuffer i data 0 (blob-size data)))))
+    (dmxbuffer-set-range! dmxbuffer i data 0 (bytevector-length data)))))
 
 (define dmxbuffer-set-range-to-value!
   (foreign-lambda* bool

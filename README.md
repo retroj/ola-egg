@@ -69,9 +69,9 @@ Return ola's version as a string.
 
     Construct a new dmxbuffer with the same contents as other-dmxbuffer.
 
-* **(dmxbuffer blob) => dmxbuffer**
+* **(dmxbuffer bytevector) => dmxbuffer**
 
-    Constructs a new dmxbuffer with the same contents as blob.
+    Constructs a new dmxbuffer with the same contents as bytevector.
 
 * **(dmxbuffer? dmxbuffer) => bool**
 
@@ -85,26 +85,26 @@ Return ola's version as a string.
 
     Size of dmxbuffer.
 
-* **(dmxbuffer-get dmxbuffer) => blob**
+* **(dmxbuffer-get dmxbuffer) => bytevector**
 
-    Return contents of dmxbuffer as a blob.
+    Return contents of dmxbuffer as a bytevector.
 
 * **(dmxbuffer-get-channel dmxbuffer channel) => value**
 
     Return the value of the given channel in dmxbuffer.
 
-* **(dmxbuffer-get-range dmxbuffer offset length) => blob**
+* **(dmxbuffer-get-range dmxbuffer offset length) => bytevector**
 
-    Return a blob of the requested range in dmxbuffer.
+    Return a bytevector of the requested range in dmxbuffer.
 
-* **(dmxbuffer-set! dmxbuffer blob offset size) => bool**
+* **(dmxbuffer-set! dmxbuffer bytevector offset size) => bool**
 
-    Set the contents of dmxbuffer to contents of blob at given offset and
+    Set the contents of dmxbuffer to contents of bytevector at given offset and
     size.
 
-* **(dmxbuffer-set! dmxbuffer blob) => bool**
+* **(dmxbuffer-set! dmxbuffer bytevector) => bool**
 
-    Set the contents of dmxbuffer to contents of blob.
+    Set the contents of dmxbuffer to contents of bytevector.
 
 * **(dmxbuffer-set! dmxbuffer dmxbuffer-other) => bool**
 
@@ -121,13 +121,13 @@ Return ola's version as a string.
     string is integers separated by commas, where 0's may be omitted,
     e.g. "1,2,,255"
 
-* **(dmxbuffer-set-range! dmxbuffer dst-offset blob) => bool**
+* **(dmxbuffer-set-range! dmxbuffer dst-offset bytevector) => bool**
 
-    Set contents of dmxbuffer from dst-offset to contents of blob.
+    Set contents of dmxbuffer from dst-offset to contents of bytevector.
 
-* **(dmxbuffer-set-range! dmxbuffer dst-offset blob src-offset src-length) => bool**
+* **(dmxbuffer-set-range! dmxbuffer dst-offset bytevector src-offset src-length) => bool**
 
-    Set contents of dmxbuffer from dst-offset to contents of blob, from
+    Set contents of dmxbuffer from dst-offset to contents of bytevector, from
     src-offset, src-length bytes.
 
 * **(dmxbuffer-set-range-to-value! dmxbuffer offset value length) => bool**
@@ -175,9 +175,9 @@ Return ola's version as a string.
 ## Examples
 
 ```scheme
-(use ola)
+(use ola r7rs)
 (let ((client (streamingclient auto-start: #f)))
-  (streamingclient-send-dmx client 0 (dmxbuffer (string->blob "AeIoUaEiO"))))
+  (streamingclient-send-dmx client 0 (dmxbuffer (string->utf8 "AeIoUaEiO"))))
 ```
 
 
@@ -191,3 +191,4 @@ LGPL-3
 * 0.1 (2016-03-12) initial release
 * 0.2 (2016-03-13) meta and documentation
 * 0.3 (2016-03-13) streamingclient-setup removed, ola-version added
+* 0.4 (2016-09-05) use bytevectors instead of blobs

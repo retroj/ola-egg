@@ -70,9 +70,9 @@ Construct a new empty dmxbuffer.
 
 Construct a new dmxbuffer with the same contents as other-dmxbuffer.
 
-<procedure>(dmxbuffer blob) => dmxbuffer</procedure>
+<procedure>(dmxbuffer bytevector) => dmxbuffer</procedure>
 
-Constructs a new dmxbuffer with the same contents as blob.
+Constructs a new dmxbuffer with the same contents as bytevector.
 
 <procedure>(dmxbuffer? dmxbuffer) => bool</procedure>
 
@@ -86,25 +86,25 @@ Test whether dmxbuffer-a and dmxbuffer-b have equal contents.
 
 Size of dmxbuffer.
 
-<procedure>(dmxbuffer-get dmxbuffer) => blob</procedure>
+<procedure>(dmxbuffer-get dmxbuffer) => bytevector</procedure>
 
-Return contents of dmxbuffer as a blob.
+Return contents of dmxbuffer as a bytevector.
 
 <procedure>(dmxbuffer-get-channel dmxbuffer channel) => value</procedure>
 
 Return the value of the given channel in dmxbuffer.
 
-<procedure>(dmxbuffer-get-range dmxbuffer offset length) => blob</procedure>
+<procedure>(dmxbuffer-get-range dmxbuffer offset length) => bytevector</procedure>
 
-Return a blob of the requested range in dmxbuffer.
+Return a bytevector of the requested range in dmxbuffer.
 
-<procedure>(dmxbuffer-set! dmxbuffer blob offset size) => bool</procedure>
+<procedure>(dmxbuffer-set! dmxbuffer bytevector offset size) => bool</procedure>
 
-Set the contents of dmxbuffer to contents of blob at given offset and size.
+Set the contents of dmxbuffer to contents of bytevector at given offset and size.
 
-<procedure>(dmxbuffer-set! dmxbuffer blob) => bool</procedure>
+<procedure>(dmxbuffer-set! dmxbuffer bytevector) => bool</procedure>
 
-Set the contents of dmxbuffer to contents of blob.
+Set the contents of dmxbuffer to contents of bytevector.
 
 <procedure>(dmxbuffer-set! dmxbuffer dmxbuffer-other) => bool</procedure>
 
@@ -118,13 +118,13 @@ Set dmxbuffer channel to value.
 
 Complement of dmxbuffer->string.  Sets the contents of dmxbuffer according to the specially formatted string str.  The format of the string is integers separated by commas, where 0's may be omitted, e.g. "1,2,,255"
 
-<procedure>(dmxbuffer-set-range! dmxbuffer dst-offset blob) => bool</procedure>
+<procedure>(dmxbuffer-set-range! dmxbuffer dst-offset bytevector) => bool</procedure>
 
-Set contents of dmxbuffer from dst-offset to contents of blob.
+Set contents of dmxbuffer from dst-offset to contents of bytevector.
 
-<procedure>(dmxbuffer-set-range! dmxbuffer dst-offset blob src-offset src-length) => bool</procedure>
+<procedure>(dmxbuffer-set-range! dmxbuffer dst-offset bytevector src-offset src-length) => bool</procedure>
 
-Set contents of dmxbuffer from dst-offset to contents of blob, from src-offset, src-length bytes.
+Set contents of dmxbuffer from dst-offset to contents of bytevector, from src-offset, src-length bytes.
 
 <procedure>(dmxbuffer-set-range-to-value! dmxbuffer offset value length) => bool</procedure>
 
@@ -169,9 +169,9 @@ Sends contents of dmxbuffer to the given universe on streamingclient.
 == Examples
 
 <enscript>
-(use ola)
+(use ola r7rs)
 (let ((client (streamingclient auto-start: #f)))
-  (streamingclient-send-dmx client 0 (dmxbuffer (string->blob "AeIoUaEiO"))))
+  (streamingclient-send-dmx client 0 (dmxbuffer (string->utf8 "AeIoUaEiO"))))
 </enscript>
 
 
@@ -185,3 +185,4 @@ LGPL-3
 * 0.1 (2016-03-12) initial release
 * 0.2 (2016-03-13) meta and documentation
 * 0.3 (2016-03-13) streamingclient-setup removed, ola-version added
+* 0.4 (2016-09-05) use bytevectors instead of blobs

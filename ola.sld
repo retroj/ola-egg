@@ -43,8 +43,7 @@
           (scheme case-lambda)
           (srfi 4)
           (srfi 99)
-          (only (chicken) and-let* blob? blob-size
-                getter-with-setter make-blob
+          (only (chicken) and-let* getter-with-setter
                 make-composite-condition make-property-condition
                 set-finalizer! signal)
           (only (data-structures) alist-ref)

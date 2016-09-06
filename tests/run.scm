@@ -1,5 +1,5 @@
 
-(use (srfi 1) test)
+(use (srfi 1 4) test)
 
 (define (load-ola-libs libs)
   (for-each
@@ -25,8 +25,8 @@
  "dmxbuffer"
  (test-assert "constructs dmxbuffer" (dmxbuffer? (dmxbuffer)))
  (test-assert "clone dmxbuffer" (dmxbuffer? (dmxbuffer (dmxbuffer))))
- (test-assert "from blob" (dmxbuffer? (dmxbuffer (string->blob " "))))
- (test "from blob (2)" #x20 (dmxbuffer-get-channel (dmxbuffer (string->blob " ")) 0)))
+ (test-assert "from bytevector" (dmxbuffer? (dmxbuffer (u8vector #x20))))
+ (test "from bytevector (2)" #x20 (dmxbuffer-get-channel (dmxbuffer (u8vector #x20)) 0)))
 
 (test-group
  "dmxbuffer-htp-merge!"
@@ -51,20 +51,20 @@
 
 (test-group
  "dmxbuffer-get"
- (test-assert "returns blob" (blob? (dmxbuffer-get (dmxbuffer))))
- (test "has expected contents" " " (blob->string (dmxbuffer-get (dmxbuffer (string->blob " "))))))
+ (test-assert "returns bytevector" (u8vector? (dmxbuffer-get (dmxbuffer))))
+ (test "has expected contents" '(#x20) (u8vector->list (dmxbuffer-get (dmxbuffer (u8vector #x20))))))
 
 (test-group
  "dmxbuffer-get-range"
- (test-assert "returns blob" (blob? (dmxbuffer-get-range (dmxbuffer) 0 1)))
- (test "has expected contents" "1"
-       (blob->string (dmxbuffer-get-range (dmxbuffer (string->blob "123")) 0 1))))
+ (test-assert "returns bytevector" (u8vector? (dmxbuffer-get-range (dmxbuffer) 0 1)))
+ (test "has expected contents" '(#x20)
+       (u8vector->list (dmxbuffer-get-range (dmxbuffer (u8vector #x20 #x21 #x22)) 0 1))))
 
 (test-group
  "dmxbuffer=?"
- (let ((a (dmxbuffer (string->blob "123")))
-       (b (dmxbuffer (string->blob "123")))
-       (c (dmxbuffer (string->blob "124"))))
+ (let ((a (dmxbuffer (u8vector #x20 #x21 #x22)))
+       (b (dmxbuffer (u8vector #x20 #x21 #x22)))
+       (c (dmxbuffer (u8vector #x20 #x21 #x23))))
    (test-assert "identity" (dmxbuffer=? a a))
    (test-assert "contents" (dmxbuffer=? a b))
    (test-assert "contents !=" (not (dmxbuffer=? a c)))))
